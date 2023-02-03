@@ -60,8 +60,7 @@ app.put("/list/:id", (req, res) => {
           WHERE id = $2;
       `;
 
-  console.log("in PUT, req.body is", req.body);
-  // if statement to check whether box has been completed
+  // if statement to check whether task has been completed
   let newStatus = true;
   if (req.body.completed == "true") {
     newStatus = false;
@@ -69,7 +68,6 @@ app.put("/list/:id", (req, res) => {
 
   const queryParams = [newStatus, req.params.id];
 
-  console.log("in PUT; queryParams are", queryParams);
   pool
     .query(queryText, queryParams)
     .then(() => {
@@ -83,6 +81,24 @@ app.put("/list/:id", (req, res) => {
 
 //       DELETE ENDPOINT
 // --------------------------- //
+app.delete("/list/:id", (req, res) => {
+  const queryText = `
+            DELETE FROM "toDoList"
+            WHERE id = $1;
+        `;
+
+  const queryParams = [req.params.id];
+
+  pool
+    .query(queryText, queryParams)
+    .then(() => {
+      res.sendStatus(204);
+    })
+    .catch((error) => {
+      console.log("DELETE request failed:", error);
+      res.sendStatus(500);
+    });
+});
 
 //         PORT SETUP
 // --------------------------- //
