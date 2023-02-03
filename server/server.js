@@ -6,7 +6,6 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Serve back static files by default
 app.use(express.static("server/public"));
 
 //         PORT SETUP
