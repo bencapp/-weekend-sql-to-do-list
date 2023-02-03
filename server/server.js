@@ -20,20 +20,37 @@ const pool = new pg.Pool({
 //        GET ENDPOINT
 // --------------------------- //
 app.get("/list", (req, res) => {
-  let queryText = `SELECT * FROM "toDoList"`;
+  const queryText = `SELECT * FROM "toDoList"`;
   pool
     .query(queryText)
     .then((dbResponse) => {
       res.send(dbResponse.rows);
     })
     .catch((error) => {
-      console.log("GET request failed", error);
+      console.log("GET request failed:", error);
       res.sendStatus(500);
     });
 });
 
 //        POST ENDPOINT
 // --------------------------- //
+app.post("/list", (req, res) => {
+  const queryText = `
+        INSERT INTO "toDoList" (task)
+        VALUES ($1)
+    `;
+  const queryParams = [req.body.task];
+
+  pool
+    .query(queryText, queryParams)
+    .then(() => {
+      res.sendStatus(204);
+    })
+    .catch((error) => {
+      console.log("POST request failed:", error);
+      res.sendStatus(500);
+    });
+});
 
 //         PUT ENDPOINT
 // --------------------------- //
