@@ -54,6 +54,32 @@ app.post("/list", (req, res) => {
 
 //         PUT ENDPOINT
 // --------------------------- //
+app.put("/list/:id", (req, res) => {
+  const queryText = `
+          UPDATE "toDoList" SET "completed" = $1
+          WHERE id = $2;
+      `;
+
+  console.log("in PUT, req.body is", req.body);
+  // if statement to check whether box has been completed
+  let newStatus = true;
+  if (req.body.completed == "true") {
+    newStatus = false;
+  }
+
+  const queryParams = [newStatus, req.params.id];
+
+  console.log("in PUT; queryParams are", queryParams);
+  pool
+    .query(queryText, queryParams)
+    .then(() => {
+      res.sendStatus(204);
+    })
+    .catch((error) => {
+      console.log("PUT request failed:", error);
+      res.sendStatus(500);
+    });
+});
 
 //       DELETE ENDPOINT
 // --------------------------- //
