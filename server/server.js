@@ -41,6 +41,8 @@ app.post("/list", (req, res) => {
     `;
   const queryParams = [req.body.task];
 
+  console.log("receiving POST: params are", queryParams);
+
   pool
     .query(queryText, queryParams)
     .then(() => {
