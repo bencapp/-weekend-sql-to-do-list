@@ -5,6 +5,7 @@ function onReady() {
 
   // create event listeners
   $("#input-form").on("submit", onAddTask);
+  $("#to-do-list").on("click", ".delete-btn", onDelete);
 
   getList();
 }
@@ -36,14 +37,30 @@ function getList() {
     });
 }
 
+function onDelete() {
+  const id = $(this).parents("tr").data("id");
+  console.log($(this));
+  console.log("deleting at id:", id);
+
+  $.ajax({ type: "DELETE", url: `/list/${id}` })
+    .then(() => {
+      getList();
+    })
+    .catch((error) => {
+      console.log("error in client DELETE:", error);
+    });
+}
 // list parameter is an array of objects send from the database
 function renderList(list) {
   $("#to-do-list").empty();
   for (let taskObject of list) {
     $("#to-do-list").append(`
-        <tr>
+        <tr data-id="${taskObject.id}">
             <td>${taskObject.task}</td>
             <td>${taskObject.completed}</td>
+            <td>
+                <button class="delete-btn">DELETE</button>
+            </td>
         </tr>`);
   }
 }
