@@ -20,7 +20,7 @@ const pool = new pg.Pool({
 //        GET ENDPOINT
 // --------------------------- //
 app.get("/list", (req, res) => {
-  const queryText = `SELECT * FROM "toDoList"`;
+  const queryText = `SELECT * FROM "toDoList" ORDER BY "id"`;
   pool
     .query(queryText)
     .then((dbResponse) => {
@@ -62,13 +62,7 @@ app.put("/list/:id", (req, res) => {
           WHERE id = $2;
       `;
 
-  // if statement to check whether task has been completed
-  let newStatus = true;
-  if (req.body.completed == "true") {
-    newStatus = false;
-  }
-
-  const queryParams = [newStatus, req.params.id];
+  const queryParams = [req.body.completed, req.params.id];
 
   pool
     .query(queryText, queryParams)

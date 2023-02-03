@@ -6,6 +6,7 @@ function onReady() {
   // create event listeners
   $("#input-form").on("submit", onAddTask);
   $("#to-do-list").on("click", ".delete-btn", onDelete);
+  $("#to-do-list").on("click", ".completed-checkbox", onCheckToggle);
 
   getList();
 }
@@ -37,10 +38,22 @@ function getList() {
     });
 }
 
+function onCheckToggle(event) {
+  event.preventDefault();
+  const id = $(this).parents("tr").data("id");
+  const checked = $(this).is(":checked");
+
+  $.ajax({ type: "PUT", url: `/list/${id}`, data: { completed: checked } })
+    .then(() => {
+      getList();
+    })
+    .catch((error) => {
+      console.log("error in client PUT:", error);
+    });
+}
+
 function onDelete() {
   const id = $(this).parents("tr").data("id");
-  console.log($(this));
-  console.log("deleting at id:", id);
 
   $.ajax({ type: "DELETE", url: `/list/${id}` })
     .then(() => {
@@ -54,10 +67,20 @@ function onDelete() {
 function renderList(list) {
   $("#to-do-list").empty();
   for (let taskObject of list) {
+    const thisID = taskObject.id;
+    let checkedVal = "";
+    if (taskObject.completed) {
+      checkedVal = "checked";
+    }
     $("#to-do-list").append(`
-        <tr data-id="${taskObject.id}">
+        <tr data-id="${thisID}">
             <td>${taskObject.task}</td>
-            <td>${taskObject.completed}</td>
+            <td>
+                <form>
+                    <label for="check-toggle-${thisID}">Completed: </label>
+                    <input class="completed-checkbox" id="check-toggle-${thisID}" type="checkbox" ${checkedVal}/>
+                </form>
+            </td>
             <td>
                 <button class="delete-btn">DELETE</button>
             </td>
