@@ -1,10 +1,16 @@
 $(document).ready(onReady);
 
+// client side STATE variable for last pressed delete button
+let rowToDelete;
+
 function onReady() {
   // create event listeners
   $("#input-form").on("submit", onAddTask);
-  $("#to-do-list").on("click", ".delete-btn", onDelete);
+  $("#confirmDelete").on("click", ".delete-btn", onDelete);
   $("#to-do-list").on("click", ".completed-checkbox", onCheckToggle);
+
+  // event listener for modal
+  $("#confirmDelete").on("show.bs.modal", onShowModal);
 
   getList();
 }
@@ -54,8 +60,17 @@ function onCheckToggle(event) {
     });
 }
 
+function onShowModal(event) {
+  // event.relatedTarget is the button that pressed to trigger the modal
+  console.log($(event.relatedTarget));
+  console.log("showing modal: event.relatedTarget is", event.relatedTarget);
+  rowToDelete = $(event.relatedTarget).parents("tr").data("id");
+
+  console.log("showing modal, row to delete is", rowToDelete);
+}
+
 function onDelete() {
-  const id = $(this).parents("tr").data("id");
+  const id = rowToDelete;
   console.log("in on delete");
 
   $.ajax({ type: "DELETE", url: `/list/${id}` })
