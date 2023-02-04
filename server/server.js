@@ -56,11 +56,15 @@ app.post("/list", (req, res) => {
 // --------------------------- //
 app.put("/list/:id", (req, res) => {
   const queryText = `
-          UPDATE "toDoList" SET "completed" = $1
-          WHERE id = $2;
+          UPDATE "toDoList" SET "completed" = $1, "timeCompleted" = $2
+          WHERE id = $3;
       `;
 
-  const queryParams = [req.body.completed, req.params.id];
+  const queryParams = [
+    req.body.completed,
+    req.body.timeCompleted,
+    req.params.id,
+  ];
 
   pool
     .query(queryText, queryParams)

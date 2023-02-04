@@ -2,7 +2,8 @@
 CREATE TABLE "toDoList" (
     "id" serial PRIMARY KEY,
     "task" varchar(80) NOT NULL,
-    "completed" BOOLEAN DEFAULT FALSE
+    "completed" BOOLEAN DEFAULT FALSE,
+    "timeCompleted" varchar(40)
 );
 
 -- DUMMY DATA

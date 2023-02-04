@@ -50,8 +50,12 @@ function onCheckToggle(event) {
   event.preventDefault();
   const id = $(this).parents("tr").data("id");
   const checked = $(this).is(":checked");
-
-  $.ajax({ type: "PUT", url: `/list/${id}`, data: { completed: checked } })
+  const timeCompleted = "now";
+  $.ajax({
+    type: "PUT",
+    url: `/list/${id}`,
+    data: { completed: checked, timeCompleted: timeCompleted },
+  })
     .then(() => {
       getList();
     })
