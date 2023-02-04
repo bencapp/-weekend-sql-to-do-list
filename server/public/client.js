@@ -50,7 +50,10 @@ function onCheckToggle(event) {
   event.preventDefault();
   const id = $(this).parents("tr").data("id");
   const checked = $(this).is(":checked");
-  const timeCompleted = "now";
+  let time = new Date();
+  const hour12 = (time.getHours() + 24) % 12 || 12;
+  timeCompleted = hour12 + ":" + time.getMinutes();
+  console.log(timeCompleted);
   $.ajax({
     type: "PUT",
     url: `/list/${id}`,
@@ -92,14 +95,21 @@ function renderList(list) {
     }
     $("#to-do-list").append(`
         <tr data-id="${thisID}" class="${checkedVal} row bg-light">
-            <td class="checkbox-cell col-1 d-flex justify-content-center p-3">
+            <td id="checkbox-${thisID}" class="checkbox-cell col-1 d-flex justify-content-center p-3">
                 <input class="completed-checkbox" id="check-toggle-${thisID}" type="checkbox" ${checkedVal}/>
             </td>
-            <td class="col-9 d-flex align-items-center">${taskObject.task}</td>
+            <td id="task-${thisID}" class="col-9 d-flex align-items-center">${taskObject.task}</td>
             <td class="col d-flex justify-content-end p-0">
                 <button class="btn btn-outline-danger" data-bs-toggle="modal"
                 data-bs-target="#confirmDelete">🗑️</button>
             </td>
         </tr>`);
+    if (taskObject.completed) {
+      $(`#task-${thisID}`).remove();
+      $(`#checkbox-${thisID}`).after(`
+        <td id="task-${thisID}" class="col-6 d-flex align-items-center">${taskObject.task}</td>
+        <td class="col-4 fs-6 d-flex align-items-center justify-content-end">Completed at ${taskObject.timeCompleted}</td>
+      `);
+    }
   }
 }
