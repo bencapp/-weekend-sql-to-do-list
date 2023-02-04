@@ -6,26 +6,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="./jquery.js"></script>
     <script src="./client.js"></script>
+    <!-- import bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="styles.css" />
+
     <title>Document</title>
   </head>
-  <body>
-    <h1>✅ TO DO LIST ✅</h1>
-    <!-- <section id="list-section"> -->
-    <form id="input-form">
-      <label for="new-entry">Add something to your list:</label>
-      <input id="new-entry" type="text" />
-      <input id="add-btn" type="submit" value="ADD" />
-    </form>
-    <table id="to-do-table">
-      <thead>
-        <th>Task</th>
-        <th>Completed?</th>
-      </thead>
-      <tbody id="to-do-list">
-        <!-- APPEND DATA HERE -->
-      </tbody>
-    </table>
+  <body class="bg-dark text-light mt-4 m-5">
+    <div class="main-container container d-flex flex-column">
+      <h1 class="text-center">✅ TO DO LIST ✅</h1>
+      <!-- <section id="list-section"> -->
+      <form id="input-form" class="form-group">
+        <label for="new-entry">Add something to your list:</label>
+        <div class="d-flex">
+          <input id="new-entry" class="form-control" type="text" />
+          <input
+            id="add-btn"
+            type="submit"
+            class="btn btn-success"
+            value="ADD"
+          />
+        </div>
+      </form>
+      <table id="to-do-table" class="container text-black mt-4">
+        <tbody id="to-do-list">
+          <!-- APPEND DATA HERE -->
+        </tbody>
+      </table>
+    </div>
     <!-- </section> -->
   </body>
 </html>
