@@ -56,6 +56,7 @@ function onCheckToggle(event) {
 
 function onDelete() {
   const id = $(this).parents("tr").data("id");
+  console.log("in on delete");
 
   $.ajax({ type: "DELETE", url: `/list/${id}` })
     .then(() => {
@@ -82,7 +83,8 @@ function renderList(list) {
             </td>
             <td class="col-9 d-flex align-items-center">${taskObject.task}</td>
             <td class="col d-flex justify-content-end p-0">
-                <button class="delete-btn btn btn-outline-danger">🗑️</button>
+                <button class="btn btn-outline-danger" data-bs-toggle="modal"
+                data-bs-target="#confirmDelete">🗑️</button>
             </td>
         </tr>`);
   }

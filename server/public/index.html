@@ -4,9 +4,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="./jquery.js"></script>
-    <script src="./client.js"></script>
     <!-- import bootstrap -->
+
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -14,13 +13,17 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="styles.css" />
+    <script src="./jquery.js"></script>
+    <script src="./client.js"></script>
+<!-- bootstrap script to enable modal -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+
 
     <title>Document</title>
   </head>
   <body class="bg-dark text-light mt-4 m-5">
     <div class="main-container container d-flex flex-column">
       <h1 class="text-center">✅ TO DO LIST ✅</h1>
-      <!-- <section id="list-section"> -->
       <form id="input-form" class="form-group">
         <label for="new-entry">Add something to your list:</label>
         <div class="d-flex">
@@ -39,6 +42,22 @@
         </tbody>
       </table>
     </div>
-    <!-- </section> -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="confirmDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Delete Task from List?</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-danger delete-btn">Yes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
   </body>
 </html>

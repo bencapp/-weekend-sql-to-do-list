@@ -1,22 +1,7 @@
 :root {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  /* background-color: rgb(254 238 254); */
 }
-
-/* h1 {
-  margin: 7vh 0vh 4vh 0vh;
-}
-
-#to-do-table {
-  margin: 20px;
-}
-
-.checkbox-cell {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-} */
 
 .completed-checkbox {
   transform: scale(1.5);
@@ -28,7 +13,6 @@
 
 /* this class is only added to a tr element when 
     an item is checked */
-
 .checked {
   background-color: #d7ffd7 !important;
 }
