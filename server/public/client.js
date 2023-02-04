@@ -62,16 +62,11 @@ function onCheckToggle(event) {
 
 function onShowModal(event) {
   // event.relatedTarget is the button that pressed to trigger the modal
-  console.log($(event.relatedTarget));
-  console.log("showing modal: event.relatedTarget is", event.relatedTarget);
   rowToDelete = $(event.relatedTarget).parents("tr").data("id");
-
-  console.log("showing modal, row to delete is", rowToDelete);
 }
 
 function onDelete() {
   const id = rowToDelete;
-  console.log("in on delete");
 
   $.ajax({ type: "DELETE", url: `/list/${id}` })
     .then(() => {
@@ -92,7 +87,7 @@ function renderList(list) {
       checkedVal = "checked";
     }
     $("#to-do-list").append(`
-        <tr data-id="${thisID}" class="${checkedVal} row bg-light border border-success">
+        <tr data-id="${thisID}" class="${checkedVal} row bg-light">
             <td class="checkbox-cell col-1 d-flex justify-content-center p-3">
                 <input class="completed-checkbox" id="check-toggle-${thisID}" type="checkbox" ${checkedVal}/>
             </td>
