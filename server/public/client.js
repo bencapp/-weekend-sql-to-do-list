@@ -1,8 +1,6 @@
 $(document).ready(onReady);
 
 function onReady() {
-  console.log("jquery loaded successfully");
-
   // create event listeners
   $("#input-form").on("submit", onAddTask);
   $("#to-do-list").on("click", ".delete-btn", onDelete);
@@ -15,9 +13,13 @@ function onAddTask(event) {
   // prevent automatic reload
   event.preventDefault();
 
+  // if input is empty, do not add
+  if (!$("#new-entry").val()) {
+    return;
+  }
+
   const taskObject = { task: $("#new-entry").val() };
 
-  console.log("adding task:", taskObject);
   $.ajax({ type: "POST", url: "/list", data: taskObject })
     .then(() => {
       getList();

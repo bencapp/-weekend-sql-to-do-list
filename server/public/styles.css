@@ -24,10 +24,6 @@ h1 {
   justify-content: center;
 }
 
-.completed-checkbox {
-  width: 70px;
-}
-
 /* this class is only added to a tr element when 
     an item is checked */
 .checked {
