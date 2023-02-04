@@ -47,11 +47,26 @@ function getList() {
 }
 
 function onCheckToggle(event) {
+  // stop default refresh
   event.preventDefault();
+  // get id of closest parent tr
   const id = $(this).parents("tr").data("id");
   const checked = $(this).is(":checked");
 
-  $.ajax({ type: "PUT", url: `/list/${id}`, data: { completed: checked } })
+  // time functionality
+  let time = new Date();
+  let amPm = "AM";
+  if (time.getHours() >= 12) {
+    amPm = "PM";
+  }
+  const hour12 = (time.getHours() + 24) % 12 || 12;
+  timeCompleted = hour12 + ":" + time.getMinutes() + " " + amPm;
+
+  $.ajax({
+    type: "PUT",
+    url: `/list/${id}`,
+    data: { completed: checked, timeCompleted: timeCompleted },
+  })
     .then(() => {
       getList();
     })
@@ -62,16 +77,11 @@ function onCheckToggle(event) {
 
 function onShowModal(event) {
   // event.relatedTarget is the button that pressed to trigger the modal
-  console.log($(event.relatedTarget));
-  console.log("showing modal: event.relatedTarget is", event.relatedTarget);
   rowToDelete = $(event.relatedTarget).parents("tr").data("id");
-
-  console.log("showing modal, row to delete is", rowToDelete);
 }
 
 function onDelete() {
   const id = rowToDelete;
-  console.log("in on delete");
 
   $.ajax({ type: "DELETE", url: `/list/${id}` })
     .then(() => {
@@ -92,15 +102,22 @@ function renderList(list) {
       checkedVal = "checked";
     }
     $("#to-do-list").append(`
-        <tr data-id="${thisID}" class="${checkedVal} row bg-light border border-success">
-            <td class="checkbox-cell col-1 d-flex justify-content-center p-3">
+        <tr data-id="${thisID}" class="${checkedVal} row bg-light">
+            <td id="checkbox-${thisID}" class="checkbox-cell col-1 d-flex justify-content-center p-3">
                 <input class="completed-checkbox" id="check-toggle-${thisID}" type="checkbox" ${checkedVal}/>
             </td>
-            <td class="col-9 d-flex align-items-center">${taskObject.task}</td>
+            <td id="task-${thisID}" class="col-9 d-flex align-items-center">${taskObject.task}</td>
             <td class="col d-flex justify-content-end p-0">
                 <button class="btn btn-outline-danger" data-bs-toggle="modal"
                 data-bs-target="#confirmDelete">🗑️</button>
             </td>
         </tr>`);
+    if (taskObject.completed) {
+      $(`#task-${thisID}`).remove();
+      $(`#checkbox-${thisID}`).after(`
+        <td id="task-${thisID}" class="col-6 d-flex align-items-center">${taskObject.task}</td>
+        <td class="col-4 fs-6 d-flex align-items-center justify-content-end">Completed at ${taskObject.timeCompleted}</td>
+      `);
+    }
   }
 }
