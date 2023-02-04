@@ -21,6 +21,7 @@ function onAddTask(event) {
   $.ajax({ type: "POST", url: "/list", data: taskObject })
     .then(() => {
       getList();
+      $("#new-entry").val("");
     })
     .catch((error) => {
       console.log("Error in client POST:", error);
@@ -30,7 +31,6 @@ function onAddTask(event) {
 function getList() {
   $.ajax({ type: "GET", url: "/list" })
     .then((response) => {
-      console.log("getting list; list is:", response);
       renderList(response);
     })
     .catch((error) => {
@@ -63,6 +63,7 @@ function onDelete() {
       console.log("error in client DELETE:", error);
     });
 }
+
 // list parameter is an array of objects send from the database
 function renderList(list) {
   $("#to-do-list").empty();
@@ -73,16 +74,13 @@ function renderList(list) {
       checkedVal = "checked";
     }
     $("#to-do-list").append(`
-        <tr data-id="${thisID}">
+        <tr data-id="${thisID}" class="${checkedVal}">
             <td>${taskObject.task}</td>
-            <td>
-                <form>
-                    <label for="check-toggle-${thisID}">Completed: </label>
-                    <input class="completed-checkbox" id="check-toggle-${thisID}" type="checkbox" ${checkedVal}/>
-                </form>
+            <td class="checkbox-cell">
+                <input class="completed-checkbox" id="check-toggle-${thisID}" type="checkbox" ${checkedVal}/>
             </td>
             <td>
-                <button class="delete-btn">DELETE</button>
+                <button class="delete-btn">🗑️</button>
             </td>
         </tr>`);
   }
