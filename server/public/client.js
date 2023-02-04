@@ -76,12 +76,12 @@ function renderList(list) {
       checkedVal = "checked";
     }
     $("#to-do-list").append(`
-        <tr data-id="${thisID}" class="${checkedVal} row">
-            <td class="checkbox-cell col-1">
+        <tr data-id="${thisID}" class="${checkedVal} row bg-light border border-success">
+            <td class="checkbox-cell col-1 d-flex justify-content-center p-3">
                 <input class="completed-checkbox" id="check-toggle-${thisID}" type="checkbox" ${checkedVal}/>
             </td>
-            <td class="col-10">${taskObject.task}</td>
-            <td class="col-1">
+            <td class="col-9 d-flex align-items-center">${taskObject.task}</td>
+            <td class="col d-flex justify-content-end p-0">
                 <button class="delete-btn btn btn-outline-danger">🗑️</button>
             </td>
         </tr>`);
