@@ -47,13 +47,21 @@ function getList() {
 }
 
 function onCheckToggle(event) {
+  // stop default refresh
   event.preventDefault();
+  // get id of closest parent tr
   const id = $(this).parents("tr").data("id");
   const checked = $(this).is(":checked");
+
+  // time functionality
   let time = new Date();
+  let amPm = "AM";
+  if (time.getHours() >= 12) {
+    amPm = "PM";
+  }
   const hour12 = (time.getHours() + 24) % 12 || 12;
-  timeCompleted = hour12 + ":" + time.getMinutes();
-  console.log(timeCompleted);
+  timeCompleted = hour12 + ":" + time.getMinutes() + " " + amPm;
+
   $.ajax({
     type: "PUT",
     url: `/list/${id}`,
