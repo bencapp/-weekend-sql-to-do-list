@@ -10,7 +10,7 @@ The prompt for this project was to create a full stack application that implemen
 
 ## Screen Shot
 
-![example of to-do-list app](images/sampleImage.png)
+![example of to-do-list app](images/sampleimage.png)
 
 ### Prerequisites
 
