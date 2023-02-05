@@ -60,7 +60,7 @@ function onCheckToggle(event) {
     amPm = "PM";
   }
   const hour12 = (time.getHours() + 24) % 12 || 12;
-  timeCompleted = hour12 + ":" + time.getMinutes() + " " + amPm;
+  timeCompleted = `${hour12}:${time.getMinutes()} ${amPm} on ${time.getMonth()}/${time.getDate()}/${time.getFullYear()}`;
 
   $.ajax({
     type: "PUT",
@@ -115,8 +115,8 @@ function renderList(list) {
     if (taskObject.completed) {
       $(`#task-${thisID}`).remove();
       $(`#checkbox-${thisID}`).after(`
-        <td id="task-${thisID}" class="col-6 d-flex align-items-center">${taskObject.task}</td>
-        <td class="col-4 fs-6 d-flex align-items-center justify-content-end">Completed at ${taskObject.timeCompleted}</td>
+        <td id="task-${thisID}" class="col-5 d-flex align-items-center">${taskObject.task}</td>
+        <td class="date-completed col-5 d-flex align-items-end justify-content-end pe-0">Completed at ${taskObject.timeCompleted}</td>
       `);
     }
   }

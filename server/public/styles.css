@@ -16,3 +16,8 @@
 .checked {
   background-color: #d7ffd7 !important;
 }
+
+/* for text of time and date completed */
+.date-completed {
+  font-size: small;
+}
